@@ -1,0 +1,68 @@
+<% include partials/head.ejs %>
+<div class="container">
+    <h1>User Profile</h1>
+    <h2>email: <%=user.email%></h2>
+    <h2>country: <%=user.country%></h2>
+    <h2>city: <%=user.city%></h2>
+    <hr>
+
+    <h3>Requests:</h3>
+    <h4 class="text-info">Someone request my book:</h4>
+        <%for(var i= 0, x=someoneToMe.length; i<x; i++){%>
+            <div class="alert alert-success" id="someonetome-<%=i%>">
+                Someone want my <strong>'<%=someoneToMe[i].target.title%>'</strong>
+                <a href="/users/acceptrequest?requestid=<%=someoneToMe[i]._id%>" class="btn btn-primary">Accept</a>
+                <a href="/users/declinerequest?requestid=<%=someoneToMe[i]._id%>" class="btn btn-danger">Decline</a>
+            </div>
+        <%}%>
+
+    <h4 class="text-primary">Someone request my book:</h4>
+    <%for(var i= 0, x=meToSomeone.length; i<x; i++){%>
+    <div class="alert alert-info" id>
+        Request I send for <strong>'<%=meToSomeone[i].target.title%>'</strong>
+        <%if(meToSomeone[i].accept){%>
+        <span class="text-success"> - has been approved, click <strong>OK</strong> to confirm the trade.</span>
+        <a href="/users/okacceptrequest?requestid=<%=meToSomeone[i]._id%>" class="btn btn-primary">Ok</a>
+        <%}%>
+    </div>
+    <%}%>
+    <br>
+    <h4 class="text-primary">My requests: </h4>
+
+    <h2>Book list:</h2>
+
+    <div class="row">
+        <% for(var i= 0, x=user.booklist.length; i<x; i++) { %>
+        <div class="card col-md-3"
+             style="background-color: palegoldenrod; padding: 10px 10px 10px 10px; width: 273px; height: 320px; margin: 10px 10px 0 0">
+            <h4 class="card-title text-center" id="bl-booktitle-<%=i%>"><%=user.booklist[i].title%></h4>
+            <img class="card-img-top" id="bl-bookimg-<%=i%>" src="<%=user.booklist[i].thumbnail%>" alt="Card image cap">
+            <div class="card-block">
+                <p class="card-text" id="bl-bookauthor-<%=i%>" style="margin-top: 1%"><b>Authors: </b><%=user.booklist[i].author%></p>
+            </div>
+        </div>
+        <%}%>
+    </div>
+
+    <hr>
+    <h2>Add New Book</h2>
+    <label for="keyword">Search the book title</label>
+    <br>
+    <input type="text" id="keyword"/>
+    <br>
+    <button class="btn btn-primary" id="searchsubmit" style="margin-top: 0.4%">Search</button>
+    <div id="searchresult" class="row" style="margin-top: 2%; display: none;">
+        <div class="card col-md-3" style="background-color: palegoldenrod; padding: 10px 10px 10px 10px;">
+            <h4 class="card-title text-center" id="booktitle"></h4>
+            <img class="card-img-top" id="bookimg" src="/images/placeholder.jpg" alt="Card image cap">
+            <div class="card-block">
+                <p class="card-text" id="bookauthor" style="margin-top: 1%"></p>
+                <button class="btn btn-success" id="addbook">Add Book</button>
+                <button class="btn btn-default" id="cancel" style="margin-left: 2%;">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/javascripts/jquery.min.js"></script>
+<script src="/javascripts/profile.js"></script>
+<% include partials/tail.ejs %>

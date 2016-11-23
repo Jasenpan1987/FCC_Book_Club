@@ -1,0 +1,31 @@
+<% include partials/head.ejs %>
+  <body>
+    <h1><%= title %></h1>
+
+    <% if (message&&message.length>0) { %>
+    <div class="alert alert-danger"><%= message %></div>
+    <%}%>
+
+    <%if(user){%>
+      <a href="/users/profile" class="btn btn-success">Profile</a>
+    <%}else{%>
+      <a href="/users/login" class="btn btn-warning">Login</a>
+      <a href="/users/signup" class="btn btn-info">Sign up</a>
+    <%}%>
+    <h2>All Available Books</h2>
+    <hr />
+    <div class="row">
+      <%for(var i= 0, x=books.length; i<x; i++){%>
+      <div class="card col-md-3"
+           style="background-color: palegoldenrod; padding: 10px 10px 10px 10px; width: 273px; height: 320px; margin: 10px 10px 0 0">
+        <h4 class="card-title text-center" id="bl-booktitle-<%=i%>"><%=books[i].title%></h4>
+        <img class="card-img-top" id="bl-bookimg-<%=i%>" src="<%=books[i].thumbnail%>" alt="Card image cap">
+        <div class="card-block">
+          <p class="card-text" id="bl-bookauthor-<%=i%>" style="margin-top: 1%"><b>Authors: </b><%=books[i].author%></p>
+          <a href="/books/requesttrade?bookid=<%=books[i]._id%>" class="btn btn-success">Request Trade</a>
+        </div>
+      </div>
+      <%}%>
+    </div>
+  </body>
+<% include partials/tail.ejs %>
